@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+
+h1, h2 {
+	color: magenta;
+}
+
+#content {
+	display:flex;
+	flex-direction: column;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.form-horizontal {
+	padding: 10px 20px;
+}
