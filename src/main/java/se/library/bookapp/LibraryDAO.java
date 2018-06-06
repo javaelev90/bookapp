@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -26,6 +28,38 @@ public class LibraryDAO {
 		return jdbcTemplate.query("SELECT * FROM library.books;", new BookRowMapper());
 	}
 
+	public List<Author> fetchAuthorsForBook(int bookId){
+		String sql = "SELECT * FROM library.authors_books WHERE bookId = ?";
+		List<Integer> authorIds = jdbcTemplate.query(sql, new PreparedStatementSetter() {
+
+			@Override
+			public void setValues(PreparedStatement prepStmt) throws SQLException {
+				prepStmt.setInt(1, bookId);
+			}
+			
+		}, new AuthorsBooksRowMapper());
+		List<Author> authors = new ArrayList<>();
+		PreparedStatementCreator prepStmtCreator;
+		for(Integer authorId : authorIds) {
+			prepStmtCreator = new PreparedStatementCreator() {
+				
+				@Override
+				public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+					String sql = "SELECT * FROM library.authors WHERE authorId = ?";
+					PreparedStatement prepStmt = conn.prepareStatement(sql);
+					prepStmt.setInt(1, authorId);
+					return prepStmt;
+				}
+			};
+			//Just one author will be in list since IDs are unique
+			List<Author> author = jdbcTemplate.query(prepStmtCreator, new AuthorRowMapper());
+			authors.add(author.get(0));
+		}
+		
+		
+		return authors;
+	}
+	
 	/**
 	 * Adds a book with corresponding author to the database
 	 * 

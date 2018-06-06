@@ -1,0 +1,6 @@
+@charset "ISO-8859-1";
+
+.search_field {
+    display: flex;
+    flex-direction: row;
+}

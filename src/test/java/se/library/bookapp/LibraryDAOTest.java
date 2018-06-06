@@ -1,10 +1,13 @@
 package se.library.bookapp;
 
 
-import org.junit.Assert;
-import org.junit.Before;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -13,6 +16,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class LibraryDAOTest {
 
+	
+	
+	
 	@Autowired
 	private LibraryDAO libraryDAO;
 
@@ -29,7 +35,7 @@ public class LibraryDAOTest {
 		author.setFirstName("Lars");
 		author.setLastName("Wipp");
 		int retVal = libraryDAO.addBook(book, author);
-		Assert.assertTrue(retVal == 0);
+		assertTrue(retVal == 0);
 	}
 	
 	/**
@@ -43,7 +49,7 @@ public class LibraryDAOTest {
 		author.setFirstName("Lars");
 		author.setLastName("Wipp");
 		int retVal = libraryDAO.addBook(book, author);
-		Assert.assertTrue(retVal == -1);
+		assertTrue(retVal == -1);
 	}
 	
 	/**
@@ -57,11 +63,23 @@ public class LibraryDAOTest {
 		Author author = new Author();
 		author.setFirstName("Lars");
 		int retVal = libraryDAO.addBook(book, author);
-		Assert.assertTrue(retVal == -1);
+		assertTrue(retVal == -1);
 	}
 	
 	
-	
+	@Test
+	public void testFetchAllBooks() {
+		Book book = new Book();
+		book.setTitle("Consider Phlebas");
+		book.setDescription("A space opera");
+		Author author = new Author();
+		author.setFirstName("Lars");
+		author.setLastName("Wipp");
+		List<Book> books = libraryDAO.fetchAllBooks();
+		books.forEach(System.out::println);
+		assertTrue(books.get(0).getTitle().equals("Consider Phlebas") && books.get(0).getDescription().equals("A space opera"));
+		
+	}
 	
 	
 	

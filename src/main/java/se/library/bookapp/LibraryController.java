@@ -1,6 +1,9 @@
 package se.library.bookapp;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +26,27 @@ public class LibraryController {
 	public String showBooks() {
 		return "show_book/show_books";
 	}
+	
+	@RequestMapping(value = "/show_books/show_all", method = RequestMethod.GET)
+	public String showBooksWithHeader(Model model) {
+		System.out.println("worked");
+		List<BookWithAuthors> booksAndAuthors = new ArrayList<>();
+		List<Book> books = libraryDAO.fetchAllBooks();
+		List<Author> authors;
+		BookWithAuthors bookWithAuthors;
+		for(Book book : books) {
+			authors = libraryDAO.fetchAuthorsForBook(book.getId());
+			bookWithAuthors = new BookWithAuthors(book, authors);
+			booksAndAuthors.add(bookWithAuthors);
+		}
+		System.out.println(booksAndAuthors.get(0).getAuthors().get(0).getFirstName());
+		model.addAttribute("booksAndAuthors",booksAndAuthors);
+		return "show_book/show_all_books";
+	}
 
 	@RequestMapping(value = "/add_book", method = RequestMethod.GET)
 	public String getAddBook() {
-		return "add_book/add_book";
+		return "add_book/add_book_GET";
 	}
 
 	@RequestMapping(value = "/add_book", method = RequestMethod.POST)
@@ -46,7 +66,7 @@ public class LibraryController {
 		
 		int ret = libraryDAO.addBook(book, author);
 		model.addAttribute("response_code", ret);
-		return "add_book/add_book_show_result";
+		return "add_book/add_book_POST";
 	}
 
 	@RequestMapping(value = "/edit_book", method = RequestMethod.GET)

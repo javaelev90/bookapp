@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,7 +35,16 @@
 			<input type="text" placeholder="Enter book name or author name"/>
 			<button>Search</button>
 			<button onclick="window.location.href = '/show_books/show_all'">Show all books</button>
-		</div>
+        </div>
+        <div class="search_result">
+            <c:forEach items="${booksAndAuthors}" var="bookWithAuthors">
+                <p>Title: <c:out value = "${bookWithAuthors.book.title}"/></p> 
+                <p>Description: <c:out value = "${bookWithAuthors.book.description}"/></p> 
+                <c:forEach items="${bookWithAuthors.authors}" var="author">
+                    <p>Author: <c:out value = "${author.firstName}"/> <c:out value = "${author.lastName}"/></p>
+                </c:forEach>
+            </c:forEach>
+        </div>
 		
 	</div>
 	

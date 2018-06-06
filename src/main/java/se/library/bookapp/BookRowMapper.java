@@ -12,8 +12,10 @@ public class BookRowMapper implements RowMapper<Book> {
 	public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
 		Book book = new Book();
-		
-		return null;
+		book.setId(rs.getInt("bookid"));
+		book.setTitle(rs.getString("booktitle"));
+		book.setDescription(rs.getString("bookdescription"));
+		return book;
 	}
 
 

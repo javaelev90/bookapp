@@ -42,7 +42,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="description">Password:</label>
+				<label class="control-label col-sm-2" for="description">Description:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="description"
 						placeholder="Enter description">
