@@ -31,8 +31,10 @@
 	<div id="content">
 		<h1>SHOW BOOKS</h1>
 		<div class="search_field">
-			<input type="text" placeholder="Enter book name or author name"/>
-			<button>Search</button>
+			<form method="GET" action="/show_books">
+				<input name="search_string" type="text" placeholder="Enter book name or author name"/>
+				<input type="submit" value="Search">
+			</form>
 			<button onclick="window.location.href = '/show_books/show_all'">Show all books</button>
 		</div>
 		

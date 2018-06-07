@@ -29,5 +29,15 @@ public class Book {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
+	@Override
+	public boolean equals(Object object) {
+		if(!(object instanceof Book)) {
+			return false;
+		}
+		if(((Book) object).getId() != id) {
+			return false;
+		}
+		return true;
+	}
 }

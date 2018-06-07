@@ -39,7 +39,7 @@
 			<button class="btn btn-primary" onclick="window.location.href = '/show_books/show_all'">Show all books</button>
         </div>
         <div class="search_result">
-            <table class="table table-bordered">
+	        <table class="table table-bordered">
             	<thead>
 	        	<tr>
 	        		<th>ID</th>

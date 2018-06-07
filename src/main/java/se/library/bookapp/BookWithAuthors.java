@@ -20,5 +20,16 @@ public class BookWithAuthors {
 		return authors;
 	}
 	
+	@Override
+	public boolean equals(Object object) {
+		if(!(object instanceof BookWithAuthors)) {
+			return false;
+		}
+		if(((BookWithAuthors)object).getBook().getId() != book.getId()) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 }
