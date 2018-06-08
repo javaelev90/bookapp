@@ -1,4 +1,4 @@
-package se.library.bookapp;
+package se.library.bookapp.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

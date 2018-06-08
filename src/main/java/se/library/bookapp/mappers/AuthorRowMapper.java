@@ -1,9 +1,11 @@
-package se.library.bookapp;
+package se.library.bookapp.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+
+import se.library.bookapp.model.Author;
 
 public class AuthorRowMapper implements RowMapper<Author>{
 

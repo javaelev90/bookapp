@@ -1,4 +1,4 @@
-package se.library.bookapp;
+package se.library.bookapp.service;
 
 
 import java.util.ArrayList;
@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import se.library.bookapp.model.Author;
+import se.library.bookapp.model.Book;
+import se.library.bookapp.model.BookWithAuthors;
+import se.library.bookapp.repository.LibraryDAO;
 
 @Controller
 public class LibraryController {
@@ -32,17 +37,34 @@ public class LibraryController {
 		if(bookWithAuthors != null) {
 			model.addAttribute("bookAndAuthors",libraryDAO.fetchBookWithAuthors(id));
 			model.addAttribute("gotContent", true);
-			System.out.println("added authors");
 		}
-		System.out.println("/edit_book/{id}");
 		return "edit_book/edit_book";
 	}
 	
 	@PutMapping("/edit_book")
-	public String editBook(@RequestParam("id") int id, @RequestParam("title") String title, @RequestParam("description") String description,
-			@RequestParam("author_firstname") List<String> authorFirstName, @RequestParam("author_lastname") List<String> authorLastName, Model model) {
+	public String editBook(@RequestParam("bookId") int bookId, @RequestParam("title") String title, @RequestParam("description") String description,
+			@RequestParam("authorId") List<Integer> authorIds, @RequestParam("author_firstname") List<String> authorFirstName, @RequestParam("author_lastname") List<String> authorLastName, Model model) {
+		Book book = new Book();
+		book.setId(bookId);
+		book.setDescription(description);
+		book.setTitle(title);
+		List<Author> authors = new ArrayList<>();
+		Author author;
+		for(int i = 0; i < authorFirstName.size(); i++) {
+			author = new Author();
+			author.setFirstName(authorFirstName.get(i));
+			author.setLastName(authorLastName.get(i));
+			if(i < authorIds.size()) {
+				author.setId(authorIds.get(i));
+			} else {
+				author.setId(-1);
+			}
+			authors.add(author);
+		}
+		libraryDAO.editBook(new BookWithAuthors(book, authors));
 		
-		return "";
+		
+		return "redirect:/show_books";
 	}
 	
 	@GetMapping("/edit_book")
@@ -52,11 +74,8 @@ public class LibraryController {
 			if(bookWithAuthors != null) {
 				model.addAttribute("bookAndAuthors",libraryDAO.fetchBookWithAuthors(id));
 				model.addAttribute("gotContent", true);
-				System.out.println("added authors");
 			}
 		}
-		
-		System.out.println("/edit_book/"+" with model");
 		return "edit_book/edit_book";
 	}
 
@@ -123,7 +142,7 @@ public class LibraryController {
 			author.setLastName(authorLastName.get(i));
 			authors.add(author);
 		}
-		ret = libraryDAO.addBook(book, authors);
+		ret = libraryDAO.addBookWithAuthors(book, authors);
 		model.addAttribute("response_code", ret);
 		return "add_book/add_book_POST";
 	}

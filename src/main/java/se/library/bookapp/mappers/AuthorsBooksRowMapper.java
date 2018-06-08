@@ -1,4 +1,4 @@
-package se.library.bookapp;
+package se.library.bookapp.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

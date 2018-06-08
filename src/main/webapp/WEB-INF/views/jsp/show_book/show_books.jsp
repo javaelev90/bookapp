@@ -30,14 +30,16 @@
 		</div>
 	</nav>
 	<div id="content">
-		<h1>SHOW BOOKS</h1>
-		<div class="search_field">
-			<form method="GET" action="/show_books">
-				<input name="search_string" type="text" placeholder="Enter book name or author name"/>
-				<input class="btn btn-primary" type="submit" value="Search">
-			</form>
-			<button class="btn btn-primary" onclick="window.location.href = '/show_books/show_all'">Show all books</button>
-        </div>
+		<div id="function-area">
+			<h1>SHOW BOOKS</h1>	
+			<div class="search_field">
+				<form method="GET" action="/show_books">
+					<input name="search_string" type="text" placeholder="Enter book name or author name"/>
+					<input class="btn btn-primary" type="submit" value="Search">
+				</form>
+				<button class="btn btn-primary" onclick="window.location.href = '/show_books/show_all'">Show all books</button>
+			</div>
+		</div>
 		
 	</div>
 	

@@ -3,7 +3,18 @@
 .search_field {
     display: flex;
     flex-direction: row;
+    padding: 5px;
 }
+
+#function-area {
+    width: 100%;
+    height: fit-content;
+}
+
+.search_field form{
+    margin-right: 10px;
+}
+
 
 .table-content:last-child{
     border: 0;
@@ -20,4 +31,13 @@ table {
 table.table.table-bordered {
     border-right: 0;
     border-bottom: 0;
+}
+
+td.table-content{
+    display: flex;
+    flex-direction: row;    
+}
+
+td.table-content form{
+    margin-right: 10px;
 }

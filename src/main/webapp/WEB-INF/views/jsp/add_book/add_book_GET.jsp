@@ -20,10 +20,8 @@
 <body>
 	<script>
 		function insertAuthorRow(){
-			console.log("worked1");
 			$( "#firstname" ).clone().insertBefore( "#submit" );
 			$( "#lastname" ).clone().insertBefore( "#submit" );
-			console.log("worked2");
 		}
 	</script>
 	<nav class="navbar navbar-inverse">

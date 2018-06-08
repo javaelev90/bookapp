@@ -31,42 +31,46 @@
 		</div>
 	</nav>
 	<div id="content">
-		<h1>SHOW BOOKS</h1>
-		<div class="search_field">
-			<form method="GET" action="/show_books">
-				<input name="search_string" type="text" placeholder="Enter book name or author name"/>
-				<input class="btn btn-primary" type="submit" value="Search">
-			</form>
-			<button class="btn btn-primary" onclick="window.location.href = '/show_books/show_all'">Show all books</button>
-        </div>
+		<div id="function-area">
+			<h1>SHOW BOOKS</h1>	
+			<div class="search_field">
+				<form method="GET" action="/show_books">
+					<input name="search_string" type="text" placeholder="Enter book name or author name"/>
+					<input class="btn btn-primary" type="submit" value="Search">
+				</form>
+				<button class="btn btn-primary" onclick="window.location.href = '/show_books/show_all'">Show all books</button>
+			</div>
+		</div>
         <div class="search_result">
-	        <table class="table table-bordered">
+            <table class="table table-bordered">
             	<thead>
 	        	<tr>
 	        		<th>ID</th>
 	        		<th>Title</th>
 	        		<th>Description</th>
-	        		<th>Author first name</th>
-	        		<th>Author last name</th>
+	        		<th>Authors</th>
 	        	</tr>
 	        	</thead>
 
 	            <c:forEach items="${booksAndAuthors}" var="bookWithAuthors">
-					<form method="DELETE" action="/show_books/?${bookWithAuthors.book.id}">
-						<tr>
-							<td name="id">${bookWithAuthors.book.id}</td>
-			                <td name="title">${bookWithAuthors.book.title}</td>
-			                <td name="description">${bookWithAuthors.book.description}</td>
-			                <c:forEach items="${bookWithAuthors.authors}" var="author">
-			                    <td name="firstname[]">${author.firstName}</td>
-			                    <td name="lastname[]">${author.lastName}</td>
-							</c:forEach>
-							<form method="DELETE" action="/show_books/${bookWithAuthors.book.id}">
-								<td class="table-content"><input class="btn btn-danger" type="submit" value="Delete" /></td>
-							</form>
-						</tr>
-			            
-	                </form>
+					<tr>
+						<td>${bookWithAuthors.book.id}</td>
+		                <td>${bookWithAuthors.book.title}</td>
+		                <td>${bookWithAuthors.book.description}</td>
+		                <td>
+		                <c:forEach items="${bookWithAuthors.authors}" var="author">
+		                    ${author.firstName} ${author.lastName}, 
+						</c:forEach>
+						</td>
+						<td class="table-content">
+							<form:form method="delete" action="/show_books/show_all/${bookWithAuthors.book.id}">
+								<input class="btn btn-danger" type="submit" value="Delete" />
+							</form:form>
+							<form:form method="get" action="/edit_book/${bookWithAuthors.book.id}">
+								<input class="btn btn-primary" type="submit" value="Edit" />
+							</form:form>
+						</td>
+					</tr>          
 	            </c:forEach>
 
             </table>

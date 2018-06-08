@@ -31,14 +31,16 @@
 		</div>
 	</nav>
 	<div id="content">
-		<h1>SHOW BOOKS</h1>
-		<div class="search_field">
-			<form method="GET" action="/show_books">
-				<input name="search_string" type="text" placeholder="Enter book name or author name"/>
-				<input class="btn btn-primary" type="submit" value="Search">
-			</form>
-			<button class="btn btn-primary" onclick="window.location.href = '/show_books/show_all'">Show all books</button>
-        </div>
+		<div id="function-area">
+			<h1>SHOW BOOKS</h1>	
+			<div class="search_field">
+				<form method="GET" action="/show_books">
+					<input name="search_string" type="text" placeholder="Enter book name or author name"/>
+					<input class="btn btn-primary" type="submit" value="Search">
+				</form>
+				<button class="btn btn-primary" onclick="window.location.href = '/show_books/show_all'">Show all books</button>
+			</div>
+		</div>
         <div class="search_result">
             <table class="table table-bordered">
             	<thead>
@@ -60,12 +62,14 @@
 		                    ${author.firstName} ${author.lastName}, 
 						</c:forEach>
 						</td>
-						<form:form method="delete" action="/show_books/show_all/${bookWithAuthors.book.id}">
-							<td class="table-content"><input class="btn btn-danger" type="submit" value="Delete" /></td>
-						</form:form>
-						<form:form method="get" action="/edit_book/${bookWithAuthors.book.id}">
-							<td class="table-content"><input class="btn btn-primary" type="submit" value="Edit" /></td>
-						</form:form>
+						<td class="table-content">
+							<form:form method="delete" action="/show_books/show_all/${bookWithAuthors.book.id}">
+								<input class="btn btn-danger" type="submit" value="Delete" />
+							</form:form>
+							<form:form method="get" action="/edit_book/${bookWithAuthors.book.id}">
+								<input class="btn btn-primary" type="submit" value="Edit" />
+							</form:form>
+						</td>
 					</tr>          
 	            </c:forEach>
 
