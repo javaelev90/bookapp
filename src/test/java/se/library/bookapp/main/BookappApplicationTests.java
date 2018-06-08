@@ -1,4 +1,4 @@
-package se.library.bookapp;
+package se.library.bookapp.main;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

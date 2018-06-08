@@ -1,4 +1,4 @@
-package se.library.bookapp;
+package se.library.bookapp.repository;
 
 
 import static org.junit.Assert.assertTrue;
