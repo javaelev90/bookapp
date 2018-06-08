@@ -46,28 +46,27 @@
 	        		<th>ID</th>
 	        		<th>Title</th>
 	        		<th>Description</th>
-	        		<th>Author first name</th>
-	        		<th>Author last name</th>
+	        		<th>Authors</th>
 	        	</tr>
 	        	</thead>
 
 	            <c:forEach items="${booksAndAuthors}" var="bookWithAuthors">
-					<form:form method="GET" action="/show_books">
-						<tr>
-							<td>${bookWithAuthors.book.id}</td>
-			                <td>${bookWithAuthors.book.title}</td>
-			                <td >${bookWithAuthors.book.description}</td>
-			                <c:forEach items="${bookWithAuthors.authors}" var="author">
-			                    <td >${author.firstName}</td>
-			                    <td >${author.lastName}</td>
-							</c:forEach>
-							<form:form method="delete" action="${'/show_books/'+bookWithAuthors.book.id}">
-								<td class="table-content"><form:input class="btn btn-danger" type="submit" value="Delete" /></td>
-								
-							</form:form>
-						</tr>
-			            
-	                </form:form>
+					<tr>
+						<td>${bookWithAuthors.book.id}</td>
+		                <td>${bookWithAuthors.book.title}</td>
+		                <td>${bookWithAuthors.book.description}</td>
+		                <td>
+		                <c:forEach items="${bookWithAuthors.authors}" var="author">
+		                    ${author.firstName} ${author.lastName}, 
+						</c:forEach>
+						</td>
+						<form:form method="delete" action="/show_books/show_all/${bookWithAuthors.book.id}">
+							<td class="table-content"><input class="btn btn-danger" type="submit" value="Delete" /></td>
+						</form:form>
+						<form:form method="get" action="/edit_book/${bookWithAuthors.book.id}">
+							<td class="table-content"><input class="btn btn-primary" type="submit" value="Edit" /></td>
+						</form:form>
+					</tr>          
 	            </c:forEach>
 
             </table>

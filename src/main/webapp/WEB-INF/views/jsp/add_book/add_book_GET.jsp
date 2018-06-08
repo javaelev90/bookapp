@@ -4,6 +4,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="/resources/css/general_style.css">
+<link rel="stylesheet" href="/resources/css/add_book_style.css">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -17,6 +18,14 @@
 <title>Personal Library</title>
 </head>
 <body>
+	<script>
+		function insertAuthorRow(){
+			console.log("worked1");
+			$( "#firstname" ).clone().insertBefore( "#submit" );
+			$( "#lastname" ).clone().insertBefore( "#submit" );
+			console.log("worked2");
+		}
+	</script>
 	<nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -48,7 +57,7 @@
 						placeholder="Enter description">
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" id="firstname">
 				<label class="control-label col-sm-2" for="author_firstname">Author
 					first name:</label>
 				<div class="col-sm-10">
@@ -56,7 +65,7 @@
 						placeholder="Enter author first name">
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" id="lastname">
 				<label class="control-label col-sm-2" for="author_lastname">Author
 					last name:</label>
 				<div class="col-sm-10">
@@ -64,13 +73,15 @@
 						placeholder="Enter author last name">
 				</div>
 			</div>
-			<div class="form-group">
+			
+			<div class="form-group" id="submit">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-default" onclick="insertAuthorRow()">Add author</button>
 				</div>
 			</div>
+			
 		</form>
-
 	</div>
 </body>
 </html>

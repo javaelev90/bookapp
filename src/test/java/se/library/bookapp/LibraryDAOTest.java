@@ -53,7 +53,9 @@ public class LibraryDAOTest {
 		Author author = new Author();
 		author.setFirstName("Lars");
 		author.setLastName("Wipp");
-		int retVal = libraryDAO.addBook(book, author);
+		List<Author> authors =  new ArrayList<>();
+		authors.add(author);
+		int retVal = libraryDAO.addBook(book, authors);
 		assertTrue(retVal == 0);
 	}
 	
@@ -67,7 +69,9 @@ public class LibraryDAOTest {
 		Author author = new Author();
 		author.setFirstName("Lars");
 		author.setLastName("Wipp");
-		int retVal = libraryDAO.addBook(book, author);
+		List<Author> authors =  new ArrayList<>();
+		authors.add(author);
+		int retVal = libraryDAO.addBook(book, authors);
 		assertTrue(retVal == -1);
 	}
 	
@@ -81,7 +85,9 @@ public class LibraryDAOTest {
 		book.setDescription("A space opera");
 		Author author = new Author();
 		author.setFirstName("Lars");
-		int retVal = libraryDAO.addBook(book, author);
+		List<Author> authors =  new ArrayList<>();
+		authors.add(author);
+		int retVal = libraryDAO.addBook(book, authors);
 		assertTrue(retVal == -1);
 	}
 	
@@ -96,14 +102,18 @@ public class LibraryDAOTest {
 		Author author = new Author();
 		author.setFirstName("Lars");
 		author.setLastName("Wipp");
-		libraryDAO.addBook(book, author);
+		List<Author> authors =  new ArrayList<>();
+		authors.add(author);
+		libraryDAO.addBook(book, authors);
 		book = new Book();
 		book.setTitle("Brake a leg");
 		book.setDescription("Cool beans");
 		author = new Author();
 		author.setFirstName("Steven");
 		author.setLastName("Khan");
-		libraryDAO.addBook(book, author);
+		authors =  new ArrayList<>();
+		authors.add(author);
+		libraryDAO.addBook(book, authors);
 		List<Book> books = libraryDAO.fetchAllBooks();
 		assertTrue(books.get(0).getTitle().equals("Consider Phlebas") && books.get(1).getDescription().equals("Cool beans"));
 		

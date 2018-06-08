@@ -5,13 +5,18 @@
     flex-direction: row;
 }
 
-.table-content:last-child {
+.table-content:last-child{
     border: 0;
+}
+
+.table-bordered>tbody>tr>td.table-content {
+	border: 0;
 }
 
 table {
     border: 0;
 }
+
 table.table.table-bordered {
     border-right: 0;
     border-bottom: 0;

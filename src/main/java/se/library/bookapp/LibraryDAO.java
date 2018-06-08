@@ -30,7 +30,7 @@ public class LibraryDAO {
 	@Autowired
 	public LibraryDAO(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
-	}
+	} 
 	
 	/**
 	 * Helper class for making prepared statements. One time use.
@@ -158,6 +158,21 @@ public class LibraryDAO {
 		
 		return authors;
 	}
+	//TODO check if author exist in database, if not create it
+//	public int editBook(BookWithAuthors bookWithAuthors) {
+//		Book book = bookWithAuthors.getBook();
+//		List<Author> authors = bookWithAuthors.getAuthors();
+//		String sqlUpdateBook = "UPDATE library.books SET bookTitle=?, bookDescription=?  WHERE bookId = ?;";
+//		jdbcTemplate.update(new HelperPreparedStatementCreator(
+//				sqlUpdateBook, book.getTitle(),book.getDescription(), book.getId()));
+//		String sqlUpdateAuthors = "UPDATE library.authors SET authorfirstname=?, authorlastname=?  WHERE authorId = ?;";
+//		for() {
+//			
+//		}
+//		jdbcTemplate.update(new HelperPreparedStatementCreator(
+//				sqlUpdateAuthors, book.getTitle(),book.getDescription(), book.getId()));
+//		return 0;
+//	}
 	
 	/**
 	 * Adds a book with corresponding author to the database
@@ -166,7 +181,7 @@ public class LibraryDAO {
 	 * @param author the author to the corresponding book
 	 * @return -1 if something went wrong, 0 if the everything went okay
 	 */
-	public int addBook(Book book, Author author) {
+	public int addBook(Book book, List<Author> authors) {
 		
 		try {
 			// Holds returned keys
@@ -184,32 +199,66 @@ public class LibraryDAO {
 			
 			keyHolder = new GeneratedKeyHolder();
 			// Insert author
-			String sqlInsertAuthor = "INSERT INTO library.authors(authorFirstName, authorLastName)  VALUES (?,?);";
-			int authorRows = jdbcTemplate.update(new HelperPreparedStatementCreator(
-					sqlInsertAuthor, author.getFirstName(), author.getLastName()), keyHolder);
-			
-			if(authorRows == 0) {
-				System.err.println("Could not insert author");
-				return -1;
-			}
-			int authorKey = (int) keyHolder.getKeys().get("authorId");	
-			
-			keyHolder = new GeneratedKeyHolder();
-			// Insert bookId and authorId into associative entity
-			String sqlInsertAuthorIdAndBookId = "INSERT INTO library.authors_books(authorId, bookId)  VALUES (?,?);";
-			int bookToAuthorRows = jdbcTemplate.update(new HelperPreparedStatementCreator(
-					sqlInsertAuthorIdAndBookId, authorKey, bookKey), keyHolder);
-			if(bookToAuthorRows == 0) {
-				System.err.println("Could not insert book to author association");
-				return -1;
+			for(Author author : authors) {
+				
+				
+				String sqlInsertAuthor = "INSERT INTO library.authors(authorFirstName, authorLastName)  VALUES (?,?);";
+				int authorRows = jdbcTemplate.update(new HelperPreparedStatementCreator(
+						sqlInsertAuthor, author.getFirstName(), author.getLastName()), keyHolder);
+				
+				if(authorRows == 0) {
+					System.err.println("Could not insert author");
+					return -1;
+				}
+				int authorKey = (int) keyHolder.getKeys().get("authorId");	
+				
+				keyHolder = new GeneratedKeyHolder();
+				// Insert bookId and authorId into associative entity
+				String sqlInsertAuthorIdAndBookId = "INSERT INTO library.authors_books(authorId, bookId)  VALUES (?,?);";
+				int bookToAuthorRows = jdbcTemplate.update(new HelperPreparedStatementCreator(
+						sqlInsertAuthorIdAndBookId, authorKey, bookKey), keyHolder);
+				if(bookToAuthorRows == 0) {
+					System.err.println("Could not insert book to author association");
+					return -1;
+				}
 			}
 			// All updates were valid
 			return 0;
 		} catch(DataAccessException e) {
-			System.out.println("Error: LibraryDAO::addBook::execute::doInTransaction:"+" A DataAccessException was thrown with message: "+e.getMessage());
+			System.out.println("Error: LibraryDAO::addBook:"+" A DataAccessException was thrown with message: "+e.getMessage());
 			return -1;
 		} 
 
+	}
+	
+	public int removeBook(int bookId) {
+		
+		try {
+			
+			String sqlDeleteBookAuthorAssociation= "DELETE FROM library.authors_books WHERE bookId = ?;";
+			int bookToAuthorRows = jdbcTemplate.update(new HelperPreparedStatementCreator(
+					sqlDeleteBookAuthorAssociation, bookId));
+			if(bookToAuthorRows == 0) {
+				System.err.println("Could not delete book to author association");
+				return -1;
+			}
+			
+			String sqlDeleteBook = "DELETE FROM library.books WHERE bookId = ?;";
+			int bookRows = jdbcTemplate.update(new HelperPreparedStatementCreator(
+					sqlDeleteBook, bookId));
+			
+			if(bookRows == 0) {
+				System.err.println("Could not delete book");
+				return -1;
+			}
+			
+		} catch(DataAccessException e) {
+			System.out.println("Error: LibraryDAO::removeBook:"+" A DataAccessException was thrown with message: "+e.getMessage());
+			return -1;
+		} 
+		
+		
+		return 0;
 	}
 	
 	
