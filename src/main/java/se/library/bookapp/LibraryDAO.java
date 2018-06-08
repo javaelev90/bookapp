@@ -84,7 +84,7 @@ public class LibraryDAO {
 		List<Author> searchAuthor = jdbcTemplate.query(new HelperPreparedStatementCreator(
 				sqlLookForAuthor, searchString), new AuthorRowMapper());
 		return searchAuthor;
-	}
+	} 
 	
 	
 	public List<Book> fetchBooksForAuthor(int authorId){

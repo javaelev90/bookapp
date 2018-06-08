@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,18 +24,18 @@ public class LibraryController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/show_books/{id}", method = RequestMethod.DELETE)
+	@DeleteMapping("/show_books/{id}")
 	public String deleteBook(@PathVariable("id") int id) {
+		System.out.println("went in");
 		
-		
-		return "show_book/show_books";
+		return "redirect:/show_book/show_all_books";
 	}
 	
 	@RequestMapping(value = "/show_books", method = RequestMethod.GET)
 	public String showBooks(@RequestParam(value = "search_string", required = false) String searchString, Model model) {
 		if(searchString == null) {
 			return "show_book/show_books";
-		}
+		} 
 		List<Book> books = libraryDAO.searchBook(searchString);
 		if(books == null) {
 			return "show_book/show_books";
@@ -68,7 +70,7 @@ public class LibraryController {
 	public String postAddBook(@RequestParam("title") String title, @RequestParam("description") String description,
 			@RequestParam("author_firstname") String authorFirstName, @RequestParam("author_lastname") String authorLastName, Model model) {
 		
-		model.addAttribute("title", title);
+		model.addAttribute("title", title); 
 		model.addAttribute("description", description);
 		model.addAttribute("author_firstname", authorFirstName);
 		model.addAttribute("author_lastname", authorLastName);

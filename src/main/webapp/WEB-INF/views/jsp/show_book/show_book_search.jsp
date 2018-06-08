@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -49,9 +50,9 @@
 	        		<th>Author last name</th>
 	        	</tr>
 	        	</thead>
-	        	<tbody>
+
 	            <c:forEach items="${booksAndAuthors}" var="bookWithAuthors">
-					<form method="DELETE" action="/show_books/${bookWithAuthors.book.id}">
+					<form method="DELETE" action="/show_books/?${bookWithAuthors.book.id}">
 						<tr>
 							<td name="id">${bookWithAuthors.book.id}</td>
 			                <td name="title">${bookWithAuthors.book.title}</td>
@@ -59,12 +60,15 @@
 			                <c:forEach items="${bookWithAuthors.authors}" var="author">
 			                    <td name="firstname[]">${author.firstName}</td>
 			                    <td name="lastname[]">${author.lastName}</td>
-			                </c:forEach>
-		                </tr>
-			            <input class="btn btn-danger" name="delete" type="submit" value="Delete" />
+							</c:forEach>
+							<form method="DELETE" action="/show_books/${bookWithAuthors.book.id}">
+								<td class="table-content"><input class="btn btn-danger" type="submit" value="Delete" /></td>
+							</form>
+						</tr>
+			            
 	                </form>
 	            </c:forEach>
-	            </tbody>
+
             </table>
         </div>
 		
