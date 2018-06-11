@@ -2,7 +2,9 @@ package se.library.bookapp.service;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -103,7 +105,8 @@ public class LibraryController {
 		}
 		
 		booksAndAuthors.addAll(libraryDAO.fetchBooksWithAuthorsForAuthors(libraryDAO.searchAuthor(searchString)));
-		model.addAttribute("booksAndAuthors", booksAndAuthors);
+
+		model.addAttribute("booksAndAuthors", new HashSet<>(booksAndAuthors));
 		return "show_book/show_book_search";
 	}
 	

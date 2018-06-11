@@ -82,7 +82,8 @@ public class LibraryDAO {
 		if (searchString.equals("")) {
 			return null;
 		}
-		String sqlLookForBook = "SELECT * FROM library.books WHERE to_tsvector(bookTitle) @@ plainto_tsquery(?);";
+		searchString = "%"+searchString+"%";
+		String sqlLookForBook = "SELECT * FROM library.books WHERE bookTitle LIKE ?;";
 		return jdbcTemplate.query(new HelperPreparedStatementCreator(sqlLookForBook, searchString),
 				new BookRowMapper());
 	}
@@ -91,7 +92,8 @@ public class LibraryDAO {
 		if (searchString.equals("")) {
 			return null;
 		}
-		String sqlLookForAuthor = "SELECT * FROM library.authors WHERE to_tsvector(authorFirstname || ' ' || authorLastname) @@ plainto_tsquery(?);";
+		searchString = "%"+searchString+"%";
+		String sqlLookForAuthor = "SELECT * FROM library.authors WHERE (authorFirstname || authorLastname) LIKE ?;";
 		List<Author> searchAuthor = jdbcTemplate
 				.query(new HelperPreparedStatementCreator(sqlLookForAuthor, searchString), new AuthorRowMapper());
 		return searchAuthor;
