@@ -1,4 +1,4 @@
-package se.library.bookapp.model;
+package se.library.bookapp.entities;
 
 public class Book {
 

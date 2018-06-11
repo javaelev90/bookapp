@@ -1,4 +1,4 @@
-package se.library.bookapp.model;
+package se.library.bookapp.entities;
 
 import java.util.List;
 

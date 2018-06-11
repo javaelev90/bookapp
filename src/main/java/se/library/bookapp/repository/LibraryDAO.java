@@ -18,12 +18,12 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import se.library.bookapp.entities.Author;
+import se.library.bookapp.entities.Book;
+import se.library.bookapp.entities.BookWithAuthors;
 import se.library.bookapp.mappers.AuthorRowMapper;
 import se.library.bookapp.mappers.AuthorsBooksRowMapper;
 import se.library.bookapp.mappers.BookRowMapper;
-import se.library.bookapp.model.Author;
-import se.library.bookapp.model.Book;
-import se.library.bookapp.model.BookWithAuthors;
 
 @Transactional
 @Repository
@@ -31,7 +31,6 @@ public class LibraryDAO {
 
 	private JdbcTemplate jdbcTemplate;
 
-	@Autowired
 	public LibraryDAO(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}

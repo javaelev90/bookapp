@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 
-import se.library.bookapp.model.Book;
+import se.library.bookapp.entities.Book;
 
 public class BookRowMapper implements RowMapper<Book> {
 

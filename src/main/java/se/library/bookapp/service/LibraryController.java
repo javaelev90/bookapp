@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,17 +18,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import se.library.bookapp.model.Author;
-import se.library.bookapp.model.Book;
-import se.library.bookapp.model.BookWithAuthors;
+import se.library.bookapp.entities.Author;
+import se.library.bookapp.entities.Book;
+import se.library.bookapp.entities.BookWithAuthors;
 import se.library.bookapp.repository.LibraryDAO;
 
 @Controller
 public class LibraryController {
 	
-	@Autowired
 	private LibraryDAO libraryDAO;
 
+	
+	public LibraryController(LibraryDAO libraryDAO) {
+		this.libraryDAO = libraryDAO;
+	}
+	
+	
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index() {
 		return "index";
@@ -46,6 +53,9 @@ public class LibraryController {
 	@PutMapping("/edit_book")
 	public String editBook(@RequestParam("bookId") int bookId, @RequestParam("title") String title, @RequestParam("description") String description,
 			@RequestParam("authorId") List<Integer> authorIds, @RequestParam("author_firstname") List<String> authorFirstName, @RequestParam("author_lastname") List<String> authorLastName, Model model) {
+		if(authorFirstName == null || authorFirstName.isEmpty()) {
+			return "edit_book/edit_book";
+		}
 		Book book = new Book();
 		book.setId(bookId);
 		book.setDescription(description);

@@ -39,7 +39,7 @@
 		</nav>
 		<div id="content">
 			<h1>Welcome to Libraricum</h1>
-			<p>This is system for storing book information</p>
+			<p>This is a system for storing information about books</p>
 		</div>
 	</body>
 
