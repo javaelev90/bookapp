@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice(assignableTypes = LibraryController.class)
+@ControllerAdvice(assignableTypes = ShowBookController.class)
 public class LibraryControllerExceptionHandler{
 	
 	@ExceptionHandler(Exception.class)
