@@ -2,12 +2,12 @@ package se.library.bookapp.repository;
 
 import java.util.List;
 
-public interface CRUDOperations<T> {
+public interface CRUDEntity<T> {
 	
 	/**
 	 * Puts the object T in the repository
 	 * @param t the object to be stored in the repository
-	 * @return 0 if the object was added to the repository, -1 if nothing was added
+	 * @return the key for the created object, -1 if nothing was created
 	 */
 	int create(T t);
 	/**
@@ -27,10 +27,10 @@ public interface CRUDOperations<T> {
 	 * @param id the T id
 	 * @return the T object or null
 	 */
-	T fetch(int id);
+	T find(int id);
 	/**
 	 * Returns a list of T from repository
 	 */
-	List<T> fetchAll();
+	List<T> findAll();
 	
 }

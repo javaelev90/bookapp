@@ -1,6 +1,5 @@
 package se.library.bookapp.repository;
 
-import java.lang.annotation.Documented;
 import java.util.List;
 
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -12,12 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import se.library.bookapp.entities.Book;
 import se.library.bookapp.mappers.BookRowMapper;
-import se.library.bookapp.repository.HelperPreparedStatementCreator;
 
 
 @Transactional
 @Repository
-public class BookDAO implements CRUDOperations<Book>, Search<Book>{
+public class BookDAO implements CRUDEntity<Book>, Search<Book>{
 
 	private JdbcTemplate jdbcTemplate;
 	
@@ -72,7 +70,7 @@ public class BookDAO implements CRUDOperations<Book>, Search<Book>{
 		int bookRows = jdbcTemplate.update(new HelperPreparedStatementCreator(sqlDeleteBook, id));
 
 		if (bookRows == 0) {
-			System.err.println("Could not delete book");
+			System.err.println("BookDAO::delete: Could not delete book row for id: "+id);
 			return -1;
 		}
 		return 0;
@@ -80,7 +78,7 @@ public class BookDAO implements CRUDOperations<Book>, Search<Book>{
 
 	
 	@Override 
-	public Book fetch(int id) {
+	public Book find(int id) {
 		String sqlGetBook = "SELECT * FROM library.books WHERE bookId = ?";
 		try {
 			return jdbcTemplate.queryForObject(sqlGetBook, new Integer[] { id }, new BookRowMapper());
@@ -93,7 +91,7 @@ public class BookDAO implements CRUDOperations<Book>, Search<Book>{
 	}
 
 	@Override 
-	public List<Book> fetchAll() {
+	public List<Book> findAll() {
 		return jdbcTemplate.query("SELECT * FROM library.books;", new BookRowMapper());
 	}
 
