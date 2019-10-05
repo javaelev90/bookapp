@@ -24,6 +24,7 @@ import se.library.bookapp.entities.BookWithAuthors;
 import se.library.bookapp.repository.LibraryDAO;
 
 @Controller
+@RequestMapping("library")
 public class LibraryController {
 	
 	private LibraryDAO libraryDAO;
@@ -49,7 +50,7 @@ public class LibraryController {
 		}
 		return "edit_book/edit_book";
 	}
-	
+
 	@PutMapping("/edit_book")
 	public String editBook(@RequestParam("bookId") int bookId, @RequestParam("title") String title, @RequestParam("description") String description,
 			@RequestParam("authorId") List<Integer> authorIds, @RequestParam("author_firstname") List<String> authorFirstName, @RequestParam("author_lastname") List<String> authorLastName, Model model) {
@@ -74,11 +75,11 @@ public class LibraryController {
 			authors.add(author);
 		}
 		libraryDAO.editBook(new BookWithAuthors(book, authors));
-		
-		
+
+
 		return "redirect:/show_books";
 	}
-	
+
 	@GetMapping("/edit_book")
 	public String editBook(@RequestParam(value = "id", required = false) Integer id, Model model) {
 		if(id != null) {
@@ -91,13 +92,13 @@ public class LibraryController {
 		return "edit_book/edit_book";
 	}
 
-	
+
 	@DeleteMapping("/show_books/show_all/{id}")
-	public String deleteBook(@PathVariable(value = "id", required = true) int id)  { 
-		libraryDAO.removeBook(id); 
+	public String deleteBook(@PathVariable(value = "id", required = true) int id)  {
+		libraryDAO.removeBook(id);
 		return "redirect:/show_books/show_all";
 	}
-	
+
 	@RequestMapping(value = "/show_books", method = RequestMethod.GET)
 	public String showBooks(@RequestParam(value = "search_string", required = false) String searchString, Model model) {
 		if(searchString == null) {
@@ -113,16 +114,16 @@ public class LibraryController {
 		if(authors == null) {
 			return "show_book/show_books";
 		}
-		
+
 		booksAndAuthors.addAll(libraryDAO.fetchBooksWithAuthorsForAuthors(libraryDAO.searchAuthor(searchString)));
 
 		model.addAttribute("booksAndAuthors", new HashSet<>(booksAndAuthors));
 		return "show_book/show_book_search";
 	}
-	
+
 	@RequestMapping(value = "/show_books/show_all", method = RequestMethod.GET)
 	public String showAllBooks(Model model) {
-		
+
 		List<BookWithAuthors> booksAndAuthors = libraryDAO.fetchBooksWithAuthorsForBooks(libraryDAO.fetchAllBooks());
 
 		model.addAttribute("booksAndAuthors",booksAndAuthors);
@@ -137,12 +138,12 @@ public class LibraryController {
 	@RequestMapping(value = "/add_book", method = RequestMethod.POST)
 	public String postAddBook(@RequestParam("title") String title, @RequestParam("description") String description,
 			@RequestParam("author_firstname") List<String> authorFirstName, @RequestParam("author_lastname") List<String> authorLastName, Model model) {
-		
-		model.addAttribute("title", title); 
+
+		model.addAttribute("title", title);
 		model.addAttribute("description", description);
 		model.addAttribute("author_firstname", authorFirstName);
 		model.addAttribute("author_lastname", authorLastName);
-		
+
 		Book book = new Book();
 		book.setTitle(title);
 		book.setDescription(description);

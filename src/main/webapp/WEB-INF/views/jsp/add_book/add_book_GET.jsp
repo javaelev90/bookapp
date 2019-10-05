@@ -42,21 +42,21 @@
 		<form class="form-horizontal" method="post" action="/add_book"
 			onSubmit="">
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="title">Title:</label>
+				<label class="control-label col-sm-2">Title:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="title"
 						placeholder="Enter title">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="description">Description:</label>
+				<label class="control-label col-sm-2">Description:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="description"
 						placeholder="Enter description">
 				</div>
 			</div>
 			<div class="form-group" id="firstname">
-				<label class="control-label col-sm-2" for="author_firstname">Author
+				<label class="control-label col-sm-2">Author
 					first name:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="author_firstname"
@@ -64,7 +64,7 @@
 				</div>
 			</div>
 			<div class="form-group" id="lastname">
-				<label class="control-label col-sm-2" for="author_lastname">Author
+				<label class="control-label col-sm-2">Author
 					last name:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="author_lastname"

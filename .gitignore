@@ -9,6 +9,12 @@
 .settings
 .springBeans
 .sts4-cache
+.vscode
+.mvn
+mvnw*
+
+# OTHER
+bookapp.iml
 
 ### IntelliJ IDEA ###
 .idea
