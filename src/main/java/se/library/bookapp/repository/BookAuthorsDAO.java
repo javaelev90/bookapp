@@ -1,9 +1,13 @@
 package se.library.bookapp.repository;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import se.library.bookapp.entities.BookWithAuthors;
 
 import java.util.List;
 
+@Transactional
+@Repository
 public class BookAuthorsDAO implements CRUDEntity<BookWithAuthors> {
 
     @Override
